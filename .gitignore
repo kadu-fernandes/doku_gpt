@@ -1,0 +1,11 @@
+__pycache__/
+doku_gpt.egg-info/
+dist/
+build/
+.venv/
+
+*.pyc
+*.sqlite
+
+.env
+
