@@ -1,0 +1,2 @@
+class InvalidInterwikiError(Exception):
+    pass

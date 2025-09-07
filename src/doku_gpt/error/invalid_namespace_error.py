@@ -1,0 +1,2 @@
+class InvalidNamespaceError(Exception):
+    pass
