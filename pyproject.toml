@@ -1,0 +1,32 @@
+[project]
+name = "doku-gpt"
+version = "0.1.0"
+description = "Convert DokuWiki files into GPT-ready artifacts."
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Kadu Fernandes" }]
+dependencies = ["click>=8.1.0", "rich>=13.0", "Pydantic>=2.11.0"]
+
+[project.optional-dependencies]
+dev = ["mypy>=1.10", "ruff>=0.5", "pytest>=8.0", "black>=25.1.0"]
+
+[project.scripts]
+doku-gpt = "doku_gpt.cli:run"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
