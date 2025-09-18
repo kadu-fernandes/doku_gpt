@@ -4,6 +4,7 @@ import click
 
 from doku_gpt.command.list_files_command import ListFilesCommand
 from doku_gpt.command.list_folders_command import ListFoldersCommand
+from doku_gpt.command.sanitize_namespace_command import SanitizeNamespaceCommand
 
 
 @click.group()
@@ -19,6 +20,14 @@ def list_group() -> None:
 
 list_group.add_command(ListFoldersCommand.execute, name="folders")
 list_group.add_command(ListFilesCommand.execute, name="files")
+
+
+@cli.group(help="Sanitize commands")
+def sanitize_group() -> None:
+    pass
+
+
+sanitize_group.add_command(SanitizeNamespaceCommand.execute, name="files")
 
 
 def run() -> None:
