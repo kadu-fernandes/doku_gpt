@@ -8,7 +8,7 @@ class TestLinkTagFactoryExternal(AbstractFakeDokuTest):
     def test_valid(self) -> None:
         values = self.__get_values()
         factory = self.__get_link_tag_factory()
-        link_tag = factory.get(values["link_tag"])
+        link_tag = factory.get(str(values["link_tag"]))
         self.assertIsNotNone(link_tag)
         self.assertTrue(link_tag.is_external)
         self.assertEqual(values["link_tag"], link_tag.link_tag)

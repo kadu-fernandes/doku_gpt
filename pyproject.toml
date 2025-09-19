@@ -5,7 +5,13 @@ description = "Convert DokuWiki files into GPT-ready artifacts."
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [{ name = "Kadu Fernandes" }]
-dependencies = ["click>=8.1.0", "rich>=13.0", "Pydantic>=2.11.0"]
+dependencies = [
+    "click>=8.1.0",
+    "rich>=13.0",
+    "pydantic>=2.11.0",
+    "requests>=2.32.0",
+    "beautifulsoup4>=4.12.3",
+]
 
 [project.optional-dependencies]
 dev = ["mypy>=1.10", "ruff>=0.5", "pytest>=8.0", "black>=25.1.0"]

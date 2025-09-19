@@ -39,5 +39,13 @@
         "**/*.cache": true,
         "**/data": true,
         "**/doku_gpt.egg-info": true
-    }
+    },
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.exclude": [
+        "**/tests/**"
+    ],
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.enablePytestSupport": true
 }
