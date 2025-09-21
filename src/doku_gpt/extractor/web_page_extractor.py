@@ -25,7 +25,7 @@ class WebPageExtractor:
 
     @classmethod
     def url_exists(cls, url: str) -> bool:
-        if not WebPageExtractor.can_fetch(url):
+        if not cls.can_fetch(url):
             return True
 
         try:
@@ -35,36 +35,12 @@ class WebPageExtractor:
             return False
 
     @classmethod
-    def __handle_og_title(cls, soup: BeautifulSoup, property: str) -> str | None:
-        og_title = soup.find("meta", attrs={"property": property})
-        if not isinstance(og_title, Tag):
-            return None
-
-        value = str(og_title.get("content") or "").strip()
-        if value != "":
-            return WebPageExtractor.__clean(value)
-
-        return None
-
-    @classmethod
-    def __handle_title(cls, soup: BeautifulSoup) -> str | None:
-        title = soup.find(attrs={"property": "title"})
-        if not isinstance(title, Tag):
-            return None
-
-        value = str(title.get("content") or "").strip()
-        if value != "":
-            return WebPageExtractor.__clean(value)
-
-        return None
-
-    @classmethod
     def extract_title(cls, url: str) -> str | None:
-        if not WebPageExtractor.can_fetch(url):
+        if not cls.can_fetch(url):
             return None
 
         try:
-            soup = WebPageExtractor.__fetch(url)
+            soup = cls.__fetch(url)
         except requests.exceptions.RequestException:
             return None
 
@@ -77,6 +53,30 @@ class WebPageExtractor:
             return og_title
 
         return cls.__handle_title(soup=soup)
+
+    @classmethod
+    def __handle_og_title(cls, soup: BeautifulSoup, property: str) -> str | None:
+        og_title = soup.find("meta", attrs={"property": property})
+        if not isinstance(og_title, Tag):
+            return None
+
+        value = str(og_title.get("content") or "").strip()
+        if value != "":
+            return cls.__clean(value)
+
+        return None
+
+    @classmethod
+    def __handle_title(cls, soup: BeautifulSoup) -> str | None:
+        title = soup.find(attrs={"property": "title"})
+        if not isinstance(title, Tag):
+            return None
+
+        value = str(title.get("content") or "").strip()
+        if value != "":
+            return cls.__clean(value)
+
+        return None
 
     @classmethod
     def __head(cls, url: str):
