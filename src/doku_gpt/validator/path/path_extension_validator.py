@@ -18,7 +18,6 @@ class PathExtensionValidator:
                 raise InvalidPathError(f"The extension '.{expected}' of the given file '{file_path}' is not valid!")
             return file_path
 
-        # Sem parâmetro `extension`: apenas verifica se o ficheiro tem uma extensão reconhecida
         try:
             ValidFile.validate(suffix)
         except ValueError:

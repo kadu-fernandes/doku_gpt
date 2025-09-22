@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import NoReturn
 
 from doku_gpt.error.invalid_path_error import InvalidPathError
 
@@ -28,6 +29,5 @@ class AbstractPathValidator(ABC):
         return original_path.resolve(strict=False)
 
     @classmethod
-    def _raise_error(cls, path: Path, suffix: str) -> None:
-        path = str(path)
-        raise InvalidPathError(f"The given path '{path}' {suffix.strip()}")
+    def _raise_error(cls, path: str | Path, suffix: str) -> NoReturn:
+        raise InvalidPathError(f"The given path '{str(path)}' {suffix.strip()}")

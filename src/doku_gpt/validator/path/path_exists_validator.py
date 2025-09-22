@@ -10,6 +10,7 @@ class PathExistsValidator(AbstractPathValidator):
     def validate(cls, path: str | Path) -> Path:
         to_validade = Path(str(path).strip())
         try:
-            return to_validade.resolve(strict=True)  # exige que o path exista
+            to_validade = to_validade.resolve(strict=True)  # exige que o path exista
         except FileNotFoundError:
             cls._raise_error(path=to_validade, suffix="does not exist!")
+        return to_validade

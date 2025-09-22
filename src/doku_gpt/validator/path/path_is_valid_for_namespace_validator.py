@@ -15,6 +15,6 @@ class PathIsValidForNamespaceValidator(AbstractPathValidator):
             return PathIsFolderValidator.validate(path)
         except InvalidPathError:
             try:
-                return PathIsFileValidator.validate(path.with_suffix(".txt"))
+                return PathIsFileValidator.validate(Path(path).with_suffix(".txt"))
             except InvalidPathError:
-                cls._raise_error(path=path, suffix="is not valid for a namespace!")
+                cls._raise_error(path=Path(path), suffix="is not valid for a namespace!")

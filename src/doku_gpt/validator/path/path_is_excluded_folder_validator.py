@@ -14,7 +14,7 @@ class PathIsExcludedFolderValidator:
         to_validate = folder.resolve()
 
         if root_folder is not None:
-            root_folder = PathIsFolderValidator.validate(root_folder) if root_folder else None
+            root_folder = PathIsFolderValidator.validate(root_folder)
             to_validate = PathIsChildValidator.validate(parent=root_folder, child=to_validate)
             to_validate = to_validate.relative_to(root_folder)
 

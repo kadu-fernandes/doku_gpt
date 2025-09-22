@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
-from pydantic import BaseModel, PrivateAttr, model_validator
+from pydantic import BaseModel, PrivateAttr, ValidationInfo, model_validator
 
 from doku_gpt.enum.link_status import LinkStatus
 from doku_gpt.enum.link_type import LinkType
@@ -69,19 +70,49 @@ class LinkTag(BaseModel):
     def link_tag(self) -> str:
         return f"[[{self.content}]]"
 
-    @property
-    def path(self) -> Path | None:
-        if not self.is_internal:
+    def __can_return_path(self) -> Path | None:
+        if self._root_folder is None:
             return None
 
+        if not self.is_internal:
+            return self._root_folder
+
         if LinkType.INTERNAL_ABSOLUTE != self.link_type and self.resolved is not None:
-            raise InvalidValueError("Only absolute namespaces can have resolver paths!")
+            raise InvalidValueError("Only absolute namespaces can have resolved paths!")
+
+        if LinkType.INTERNAL_ABSOLUTE != self.link_type:
+            if self.resolved is not None:
+                raise InvalidValueError("Only absolute namespaces can have resolved paths!")
+            return self._root_folder
+
+        return self._root_folder
+
+    @property
+    def path(self) -> Path | None:
+        root_folder = self.__can_return_path()
+        if root_folder is None:
+            return None
 
         if self.resolved is None:
             return None
-        if self._root_folder is None:
+
+        return root_folder.joinpath(self.resolved)
+
+    @property
+    def relative_path(self) -> Path | None:
+        root_folder = self.__can_return_path()
+        if root_folder is None:
             return None
-        return self._root_folder.joinpath(self.resolved)
+
+        to_resolve = str(self.target_prefix).lstrip(":").replace(":", os.sep)
+        to_resolve_path = root_folder.joinpath(to_resolve)
+        try:
+            return to_resolve_path.resolve(True)
+        except FileNotFoundError:
+            try:
+                return to_resolve_path.with_suffix("*.txt").resolve(True)
+            except FileNotFoundError:
+                return None
 
     @property
     def url(self) -> str | None:
@@ -95,7 +126,7 @@ class LinkTag(BaseModel):
         self._root_folder = Path(root_folder)
 
     @model_validator(mode="after")
-    def _attach_root_from_context(self, info):
+    def _attach_root_from_context(self, info: ValidationInfo):
         if info.context and "root_folder" in info.context:
             self.attach_root(info.context["root_folder"])
         return self
