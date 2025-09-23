@@ -96,6 +96,9 @@ class LinkTag(BaseModel):
         if self.resolved is None:
             return None
 
+        if LinkType.INTERNAL_ABSOLUTE != self.link_type:
+            raise InvalidValueError(f"Non absolute namespaces '{self.target_prefix}' cannot have resolved paths!    ")
+
         return root_folder.joinpath(self.resolved)
 
     @property

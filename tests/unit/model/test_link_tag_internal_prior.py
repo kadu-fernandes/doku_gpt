@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import unittest
-
 from doku_gpt.enum.link_type import LinkType
 from doku_gpt.error.invalid_value_error import InvalidValueError
 from doku_gpt.model.link_tag import LinkTag
+from tests.unit.abstract_fake_doku_test import AbstractFakeDokuTest
 
 
-class TestLinkTagInternalPrior(unittest.TestCase):
+class TestLinkTagInternalPrior(AbstractFakeDokuTest):
     def __init__(self, methodName: str = "runTest"):
         super().__init__(methodName)
         self.__link_type: LinkType = LinkType.INTERNAL_PRIOR
@@ -103,6 +102,7 @@ class TestLinkTagInternalPrior(unittest.TestCase):
             label=self.__label_value,
             resolved=self.__resolved_value,
         )
+        link_tag.attach_root(self.tmp_root)
         return link_tag
 
     def __create_link_tag_only_core(self) -> LinkTag:
