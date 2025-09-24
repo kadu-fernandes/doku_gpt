@@ -6,6 +6,7 @@ from doku_gpt.command.create_settings_command import CreateSettingsCommand
 from doku_gpt.command.list_files_command import ListFilesCommand
 from doku_gpt.command.list_folders_command import ListFoldersCommand
 from doku_gpt.command.sanitize_namespace_command import SanitizeNamespaceCommand
+from doku_gpt.command.update_settings_command import UpdateSettingsCommand
 
 
 @click.group()
@@ -35,6 +36,7 @@ list_group.add_command(ListFilesCommand.execute, name="files")
 sanitize_group.add_command(SanitizeNamespaceCommand.execute, name="files")
 
 settings_group.add_command(CreateSettingsCommand.execute, name="create")
+settings_group.add_command(UpdateSettingsCommand.execute, name="update")
 
 
 def run() -> None:
