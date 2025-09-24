@@ -7,6 +7,9 @@ from doku_gpt.error.invalid_namespace_error import InvalidNamespaceError
 from doku_gpt.error.invalid_path_error import InvalidPathError
 from doku_gpt.extractor.doku_page_extractor import DokuPageExtractor
 from doku_gpt.model.link_tag import LinkTag
+from doku_gpt.sanitizer.doku.inline_markup_sanitizer import InlineMarkupSanitizer
+from doku_gpt.sanitizer.doku.line_break_sanitizer import LinebreakSanitizer
+from doku_gpt.sanitizer.doku.link_label_sanitizer import LinkLabelSanitizer
 from doku_gpt.validator.path.file_validator import FileValidator
 from doku_gpt.validator.path.folder_validator import FolderValidator
 
@@ -128,8 +131,13 @@ class AbstractNamespaceResolver(AbstractRootFolder):
         if link_tag.excerpt is not None:
             return False, link_tag
 
-        link_tag.excerpt = DokuPageExtractor.extract_excerpt(
+        excerpt = DokuPageExtractor.extract_excerpt(
             page_path=page_path,
             fragment=link_tag.target_fragment,
         )
+        if excerpt is not None:
+            excerpt = InlineMarkupSanitizer.sanitize(excerpt)
+            excerpt = LinkLabelSanitizer.sanitize(excerpt)
+            excerpt = LinebreakSanitizer.sanitize(excerpt)
+        link_tag.excerpt = excerpt
         return True, link_tag
