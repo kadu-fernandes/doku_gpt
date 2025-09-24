@@ -12,12 +12,13 @@ from doku_gpt.command.abstract_finder_command import AbstractFinderCommand
 class ListFoldersCommand(AbstractFinderCommand):
     @staticmethod
     @click.command()
-    @AbstractFinderCommand.common_options  # <-- usa aqui
+    @AbstractFinderCommand.common_options
     def execute(
         root_folder: Path,
-        pattern: str,
         excluded_folders: tuple[str, ...],
-        excluded_files: tuple[str, ...],  # fica disponível mesmo se não usares
+        excluded_files: tuple[str, ...],
+        pattern: str = "*",
+        verbose: bool = False,
     ) -> None:
         finder = ListFoldersCommand._create_finder(
             root_folder=root_folder,

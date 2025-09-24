@@ -43,6 +43,7 @@ class ListFilesCommand(AbstractFinderCommand):
         excluded_folders: tuple[str, ...],
         excluded_files: tuple[str, ...],
         pattern: str = "*",
+        verbose: bool = False,
     ) -> None:
         finder = ListFilesCommand._create_finder(
             root_folder=root_folder,
