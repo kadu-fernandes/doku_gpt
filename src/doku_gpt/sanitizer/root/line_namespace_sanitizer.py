@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import copy
-import re
-from typing import List
 
 from doku_gpt.enum.link_type import LinkType
 from doku_gpt.factory.link_tag_factory import LinkTagFactory
+from doku_gpt.functions import extract_link_tags
 from doku_gpt.resolver.link_tag.external_resolver import ExternalResolver
 from doku_gpt.resolver.link_tag.internal_absolute_resolver import InternalAbsoluteResolver
 from doku_gpt.resolver.link_tag.internal_implicit_resolver import InternalImplicitResolver
@@ -16,20 +15,14 @@ from doku_gpt.sanitizer.root.abstract_root_sanitizer import AbstractRootSanitize
 
 
 class LineNamespaceSanitizer(AbstractRootSanitizer):
-    _LINK_RE = re.compile(r"(?P<token>\[\[(?P<path>[^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]*)?\]\])")
-
     def sanitize(self, line: str) -> tuple[bool, str]:
         """Find link_tags inside a line, clean them, and return the updated line."""
         to_sanitize = str(line)
-        namespaces = self.__extract_link_tags(to_sanitize)
+        namespaces = extract_link_tags(to_sanitize)
         for namespace in namespaces:
             sanitized = self.__sanitize_link_tag(namespace)
             to_sanitize = self.__replace_link_tag(to_sanitize, namespace, sanitized)
         return line != to_sanitize, to_sanitize
-
-    def __extract_link_tags(self, line: str) -> List[str]:
-        """Return all link_tags-like paths found inside [[...]] on this line."""
-        return [path.strip() for path, _ in self._LINK_RE.findall(line)]
 
     def __sanitize_link_tag(self, link_tag: str) -> str:
         """Sanitize a given link_tag."""

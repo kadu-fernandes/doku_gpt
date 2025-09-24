@@ -47,12 +47,21 @@ class LinkTag(BaseModel):
         return self.link_type == LinkType.INTERWIKI
 
     @property
-    def core(self) -> str:
-        core = self.target_prefix
+    def is_valid(self) -> bool:
+        return LinkStatus.VALID == self.link_status
+
+    @property
+    def target(self) -> str:
+        target = self.target_prefix
         if self.is_interwiki:
             if self.target_suffix is None:
-                raise InvalidValueError(f"The interwiki '{core}' must have a suffix!")
-            core += f">{self.target_suffix}"
+                raise InvalidValueError(f"The interwiki '{target}' must have a suffix!")
+            target += f">{self.target_suffix}"
+        return target
+
+    @property
+    def core(self) -> str:
+        core = self.target
         if self.target_query:
             core += f"?{self.target_query}"
         if self.target_fragment:

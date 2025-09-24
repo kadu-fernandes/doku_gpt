@@ -54,6 +54,18 @@ class AbstractFinderCommand:
 
     @staticmethod
     def _create_finder(root_folder: Path, excluded_folders: tuple[str, ...], excluded_files: tuple[str, ...]) -> Finder:
+        default_excluded_folders, default_excluded_files = AbstractFinderCommand._handle_excluded(
+            excluded_folders=excluded_folders, excluded_files=excluded_files
+        )
+
+        return Finder(
+            root_folder=root_folder, excluded_folders=default_excluded_folders, excluded_files=default_excluded_files
+        )
+
+    @staticmethod
+    def _handle_excluded(
+        excluded_folders: tuple[str, ...], excluded_files: tuple[str, ...]
+    ) -> tuple[list[str], list[str]]:
         default_excluded_folders: list[str] = ["playground", "wiki", "old_content"]
         default_excluded_folders.extend(excluded_folders)
         default_excluded_folders = sorted(default_excluded_folders)
@@ -62,6 +74,4 @@ class AbstractFinderCommand:
         default_excluded_files.extend(excluded_files)
         default_excluded_files = sorted(default_excluded_files)
 
-        return Finder(
-            root_folder=root_folder, excluded_folders=default_excluded_folders, excluded_files=default_excluded_files
-        )
+        return default_excluded_folders, default_excluded_files
