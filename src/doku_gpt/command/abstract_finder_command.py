@@ -25,12 +25,11 @@ class AbstractFinderCommand:
             help="Pattern to filter the files (ex: '*.txt').",
         )(func)
 
-        # FLAG booleano (sem =valor)
         func = click.option(
             "-v",
             "--verbose",
             is_flag=True,
-            default=False,  # <- bool, não "False"
+            default=False,
             show_default=True,
             help="Shows output.",
         )(func)

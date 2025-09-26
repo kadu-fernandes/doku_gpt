@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import click
 
+from doku_gpt.command.compile_doku_command import CompileDokuCommand
 from doku_gpt.command.create_settings_command import CreateSettingsCommand
 from doku_gpt.command.list_files_command import ListFilesCommand
 from doku_gpt.command.list_folders_command import ListFoldersCommand
@@ -30,6 +31,11 @@ def settings_group() -> None:
     pass
 
 
+@cli.group(help="Compile commands")
+def compile_group() -> None:
+    pass
+
+
 list_group.add_command(ListFoldersCommand.execute, name="folders")
 list_group.add_command(ListFilesCommand.execute, name="files")
 
@@ -37,6 +43,8 @@ sanitize_group.add_command(SanitizeNamespaceCommand.execute, name="files")
 
 settings_group.add_command(CreateSettingsCommand.execute, name="create")
 settings_group.add_command(UpdateSettingsCommand.execute, name="update")
+
+compile_group.add_command(CompileDokuCommand.execute, name="doku")
 
 
 def run() -> None:
