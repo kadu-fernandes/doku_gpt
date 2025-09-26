@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.italic_sanitizer import ItalicSanitizer
+from doku_gpt.sanitizer.doku.line.italic_sanitizer import ItalicSanitizer
 
 
 class TestItalicSanitizer(unittest.TestCase):

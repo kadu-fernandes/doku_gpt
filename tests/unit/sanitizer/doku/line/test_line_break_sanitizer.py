@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.line_break_sanitizer import LinebreakSanitizer
+from doku_gpt.sanitizer.doku.line.line_break_sanitizer import LinebreakSanitizer
 
 
 class TestLineBreakSanitizer(unittest.TestCase):

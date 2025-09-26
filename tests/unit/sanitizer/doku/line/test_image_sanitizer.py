@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.image_sanitizer import ImageSanitizer
+from doku_gpt.sanitizer.doku.line.image_sanitizer import ImageSanitizer
 
 
 class TestDeletedSanitizer(unittest.TestCase):

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.superscript_sanitizer import SuperscriptSanitizer
+from doku_gpt.sanitizer.doku.line.superscript_sanitizer import SuperscriptSanitizer
 
 
 class TestSuperscriptSanitizer(unittest.TestCase):

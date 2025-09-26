@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.monospace_sanitizer import MonospaceSanitizer
+from doku_gpt.sanitizer.doku.line.monospace_sanitizer import MonospaceSanitizer
 
 
 class TestMonospaceSanitizer(unittest.TestCase):

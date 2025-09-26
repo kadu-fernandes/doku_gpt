@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import re
 
-from doku_gpt.sanitizer.doku.bold_sanitizer import BoldSanitizer
-from doku_gpt.sanitizer.doku.deleted_sanitizer import DeletedSanitizer
-from doku_gpt.sanitizer.doku.italic_sanitizer import ItalicSanitizer
-from doku_gpt.sanitizer.doku.monospace_sanitizer import MonospaceSanitizer
-from doku_gpt.sanitizer.doku.subscript_sanitizer import SubscriptSanitizer
-from doku_gpt.sanitizer.doku.superscript_sanitizer import SuperscriptSanitizer
-from doku_gpt.sanitizer.doku.underline_sanitizer import UnderlineSanitizer
+from doku_gpt.sanitizer.doku.line.bold_sanitizer import BoldSanitizer
+from doku_gpt.sanitizer.doku.line.deleted_sanitizer import DeletedSanitizer
+from doku_gpt.sanitizer.doku.line.italic_sanitizer import ItalicSanitizer
+from doku_gpt.sanitizer.doku.line.monospace_sanitizer import MonospaceSanitizer
+from doku_gpt.sanitizer.doku.line.subscript_sanitizer import SubscriptSanitizer
+from doku_gpt.sanitizer.doku.line.superscript_sanitizer import SuperscriptSanitizer
+from doku_gpt.sanitizer.doku.line.underline_sanitizer import UnderlineSanitizer
 
 
 class InlineMarkupSanitizer:

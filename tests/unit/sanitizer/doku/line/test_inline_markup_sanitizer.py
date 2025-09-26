@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.inline_markup_sanitizer import InlineMarkupSanitizer
+from doku_gpt.sanitizer.doku.line.inline_markup_sanitizer import InlineMarkupSanitizer
 
 
 class TestInlineMarkupSanitizer(unittest.TestCase):

@@ -7,9 +7,9 @@ from doku_gpt.error.invalid_namespace_error import InvalidNamespaceError
 from doku_gpt.error.invalid_path_error import InvalidPathError
 from doku_gpt.extractor.doku_page_extractor import DokuPageExtractor
 from doku_gpt.model.link_tag import LinkTag
-from doku_gpt.sanitizer.doku.inline_markup_sanitizer import InlineMarkupSanitizer
-from doku_gpt.sanitizer.doku.line_break_sanitizer import LinebreakSanitizer
-from doku_gpt.sanitizer.doku.link_label_sanitizer import LinkLabelSanitizer
+from doku_gpt.sanitizer.doku.line.inline_markup_sanitizer import InlineMarkupSanitizer
+from doku_gpt.sanitizer.doku.line.line_break_sanitizer import LinebreakSanitizer
+from doku_gpt.sanitizer.doku.line.link_label_sanitizer import LinkLabelSanitizer
 from doku_gpt.validator.path.file_validator import FileValidator
 from doku_gpt.validator.path.folder_validator import FolderValidator
 

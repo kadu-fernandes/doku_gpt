@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.underline_sanitizer import UnderlineSanitizer
+from doku_gpt.sanitizer.doku.line.underline_sanitizer import UnderlineSanitizer
 
 
 class TestUnderlineSanitizer(unittest.TestCase):

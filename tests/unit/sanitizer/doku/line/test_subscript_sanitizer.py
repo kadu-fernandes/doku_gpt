@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.subscript_sanitizer import SubscriptSanitizer
+from doku_gpt.sanitizer.doku.line.subscript_sanitizer import SubscriptSanitizer
 
 
 class TestSubscriptSanitizer(unittest.TestCase):

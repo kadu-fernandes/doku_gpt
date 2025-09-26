@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.link_label_sanitizer import LinkLabelSanitizer
+from doku_gpt.sanitizer.doku.line.link_label_sanitizer import LinkLabelSanitizer
 
 
 class TestLinkLabelSanitizer(unittest.TestCase):

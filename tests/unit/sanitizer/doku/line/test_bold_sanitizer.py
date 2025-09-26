@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from doku_gpt.sanitizer.doku.bold_sanitizer import BoldSanitizer
+from doku_gpt.sanitizer.doku.line.bold_sanitizer import BoldSanitizer
 
 
 class TestBoldSanitizer(unittest.TestCase):
