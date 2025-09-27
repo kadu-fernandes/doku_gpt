@@ -79,6 +79,63 @@ class NamespaceCompiler(AbstractRootFolder):
         content = ("\n\n").join(s.rstrip("\n") for s in parts) + "\n"
         self.gpt_file.write_text(content, encoding="utf-8")
 
+        # --- final step: keep only gpt_* outputs; remove the rest of artifacts ---
+        self.__cleanup_namespace_artifacts()
+
+    def __cleanup_namespace_artifacts(self) -> None:
+        """
+        Remove all files and folders used to build the GPT output, keeping only files named 'gpt_*.txt'.
+        Safe behavior:
+          - Deletes non-gpt files directly under the current namespace folder.
+          - Does NOT remove non-empty subfolders.
+          - After cleanup, removes this namespace folder if it becomes empty, and then prunes empty parents
+            upwards until reaching self.root_folder (which is never removed).
+        """
+        # 1) remove non-gpt files directly under the namespace folder
+        for child in list(self.namespace_folder.iterdir()):
+            if child.is_file():
+                if not self.__is_gpt_output_file(child):
+                    child.unlink(missing_ok=True)
+                continue
+            if child.is_dir():
+                # Try to remove the subdir only if it is empty right now
+                self.__remove_dir_if_empty(child)
+
+        # 2) if the namespace folder is now empty, remove it
+        self.__remove_dir_if_empty(self.namespace_folder)
+
+        # 3) prune empty parents up to (but not including) root_folder
+        current = self.namespace_folder.parent
+        while current != self.root_folder and current.is_dir():
+            if self.__dir_is_empty(current):
+                try:
+                    current.rmdir()
+                except OSError:
+                    break
+                current = current.parent
+                continue
+            break
+
+    def __is_gpt_output_file(self, file_path: Path) -> bool:
+        return file_path.is_file() and file_path.name.startswith("gpt_") and file_path.suffix == ".txt"
+
+    def __dir_is_empty(self, folder: Path) -> bool:
+        try:
+            next(folder.iterdir())
+            return False
+        except StopIteration:
+            return True
+
+    def __remove_dir_if_empty(self, folder: Path) -> None:
+        if self.__dir_is_empty(folder):
+            try:
+                # never remove the configured root folder
+                if folder.resolve() != self.root_folder.resolve():
+                    folder.rmdir()
+            except OSError:
+                # not empty or in use; leave it
+                pass
+
     def __read_text(self, file_path: Path) -> str:
         return file_path.read_text(encoding="utf-8")
 

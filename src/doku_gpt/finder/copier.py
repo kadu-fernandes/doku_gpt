@@ -11,7 +11,7 @@ from doku_gpt.validator.path.folder_validator import FolderValidator
 
 class Copier(AbstractRootFolder):
     def copy_file(self, origin: str | Path, destination: str | Path) -> Path:
-        origin_path = FileValidator.validate(origin)
+        origin_path = Path(origin).resolve(strict=True)
         destination_path = Path(destination)
 
         if destination_path.exists() and destination_path.is_dir():

@@ -25,7 +25,7 @@ class AbstractRootFolder(ABC):
 
     @property
     def settings_file(self) -> Path:
-        return self.__root_folder.joinpath(".doku_gpt.gpt")
+        return self.__root_folder.joinpath(".doku_gpt.json")
 
     @property
     def excluded_folders(self) -> list[str]:

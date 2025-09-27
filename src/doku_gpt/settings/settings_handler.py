@@ -40,6 +40,14 @@ class SettingsHandler(AbstractRootFolder):
         self.__scan_and_merge()
         self.__save()
 
+    def load(self) -> dict[str, LinkTag]:
+        """
+        Load the current .doku_gpt.json file (if any) and return link tags.
+        """
+        self.__link_tags = {}
+        self.__load()
+        return self.__link_tags
+
     def __scan_and_merge(self) -> None:
         finder = self.__create_finder()
         files = finder.find_files("*.txt")
